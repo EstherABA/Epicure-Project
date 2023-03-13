@@ -4,7 +4,7 @@ import CardGeneral from '../General/CardGeneral/CardGeneral';
 import { ICard } from '../../Interfaces';
 import { useSelector } from "react-redux";
 import { RootState } from '../../store/Store';
-import { Restaurant, Dish } from '../../Interfaces'
+import { IRestaurant, IDish } from '../../Interfaces'
 import { useParams } from 'react-router-dom';
 import Clock from '../../assets/icon/clock.svg';
 import NavBar from '../General/NavBar/NavBar';
@@ -17,18 +17,18 @@ import Modal from '../Modal/Modal';
 
 const SingleRestaurant: React.FC = () => {
     const idFromRestNavigate = useParams();
-    let arrDishesObj: Array<Dish> = [];
+    let arrDishesObj: Array<IDish> = [];
 
     const allRestaurants = useSelector(
         (state:RootState) => state.restaurants.value);
     const allDishes = useSelector(
         (state:RootState) => state.dishes.value);
     
-    const mapRestaurants = allRestaurants.filter((restaurant:Restaurant) =>{
+    const mapRestaurants = allRestaurants.filter((restaurant:IRestaurant) =>{
         return restaurant.id === Number(idFromRestNavigate.id)
     })[0];
     mapRestaurants.dishes.map((DishIdFromRestObj:number) =>{
-        allDishes.filter((dishObj:Dish)=> {
+        allDishes.filter((dishObj:IDish)=> {
         if(dishObj.id === DishIdFromRestObj) {
             arrDishesObj.push(dishObj)
         }}); 
@@ -37,7 +37,7 @@ const SingleRestaurant: React.FC = () => {
     const [modalState, setModal] =  useState(false)
     const [dishIdState, setDishId] =  useState(0);
 
-    const dishesPresentInPage = arrDishesObj.map((dish:Dish)=>{
+    const dishesPresentInPage = arrDishesObj.map((dish:IDish)=>{
         return <CardGeneral 
         class='dish-card'
         ImgSrc={require(`../../${dish.image}`)}

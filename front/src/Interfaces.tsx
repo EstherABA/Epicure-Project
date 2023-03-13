@@ -10,7 +10,7 @@ export interface IButtonProps{
 export interface IModal {
     showModal: boolean;
     selectedDishId: number;
-    dishes: Array<Dish>;
+    dishes: Array<IDish>;
     closeModal: () => void;
 }
 export interface ICard{
@@ -42,30 +42,31 @@ export interface IChefPortrait {
 }
 
 export interface RootState {
-    restaurants: RestaurantsState;
-    chefs: ChefsState;
+    restaurants: IRestaurantsState;
+    chefs: IChefsState;
 }
 
-export interface Restaurant {
+export interface IRestaurant {
     id:number,
     name:string,
     image:string,
     imageHero?:string,
     chefName:string,
-    hours:any,
     address:string ,
     rating: string,
     isPopular: boolean,
-    dishes:Array<number>,
+    isNew: boolean,
+    mostPopular: boolean,
     openHour: number,
     closeHour: number,
+    dishes:Array<number>,
 }
 
-export interface RestaurantsState {
-    value: Restaurant[];
+export interface IRestaurantsState {
+    value: Array<IRestaurant>;
 }
 
-export interface Chef {
+export interface IChef {
     id:number,
     name:string,
     portrait: string,
@@ -77,11 +78,11 @@ export interface Chef {
     mostViewed: boolean,
 }
 
-export interface ChefsState {
-    value: Chef[];
+export interface IChefsState {
+    value: Array<IChef>;
 }
 
-export interface Dish {
+export interface IDish {
     id:number,
     name:string,
     image: string,
@@ -94,6 +95,6 @@ export interface Dish {
     optionalSides: Array<string>,
     optionalChanges: Array<string>,
 }
-export interface DishesState {
-    value: Dish[];
+export interface IDishesState {
+    value: Array<IDish>;
 }

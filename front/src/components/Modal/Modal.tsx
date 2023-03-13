@@ -4,7 +4,7 @@ import './Modal.css'
 import Plus from '../../assets/icon/plus.svg'
 import Subtract from '../../assets/icon/subtract.svg'
 import Exit from '../../assets/icon/exit.svg'
-import {Dish, IModal} from '../../Interfaces'
+import {IDish, IModal} from '../../Interfaces'
 import SingleRestaurant from '../SingleRestaurant/SingleRestaurant';
 import CardGeneral from '../General/CardGeneral/CardGeneral';
 import LineAroundPrice from '../../assets/icon/LineAroundPrice.svg';
@@ -13,7 +13,7 @@ const Modal: React.FC<IModal> = (props:IModal) => {
     const [modalState, setModal] =  useState(true)
     const [Quantity, setQuantity] =  useState(0)
     
-    let chosenDish:Dish = props.dishes.filter((dishObj:Dish)=> {
+    let chosenDish:IDish = props.dishes.filter((dishObj:IDish)=> {
                     return dishObj.id === props.selectedDishId
                 })[0];
     const handleCloseModal = () => {

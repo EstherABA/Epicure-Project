@@ -1,22 +1,27 @@
 import React from 'react';
 import HomeCard from '../General/CardGeneral/CardGeneral';
-import data from '../../epicure.json'
+// import data from '../../epicure.json'
+import { useSelector } from 'react-redux';
+import { IRestaurant, RootState } from '../../Interfaces'; 
 import "./PopularRestaurant.css"
 import ButtonG from '../General/ButtonGeneral/ButtonG';
 
 
 
 const PopularRestaurant: React.FC = () => {
+  const allRestaurants = useSelector(
+    (state:RootState) => state.restaurants.value
+  );
+  const restaurantPopular = allRestaurants.map((restaurant:IRestaurant) => { 
 
-  const items = data.restaurants.map((item:any) => {
-    if (item.isPopular === true) {
+    if (restaurant.isPopular === true) {
       return <HomeCard 
         class='restaurantP-card'
-        ImgSrc={require(`../../${item.image}`)} 
-        name={item.name} 
-        ImgAlt={item.name}  
-        chefName={item.chefName} 
-        moreInfoSrc={require(`../../assets/icon/star${item.rating}.svg`)}
+        ImgSrc={require(`../../${restaurant.image}`)} 
+        name={restaurant.name} 
+        ImgAlt={restaurant.name}  
+        chefName={restaurant.chefName} 
+        moreInfoSrc={require(`../../assets/icon/star${restaurant.rating}.svg`)}
       />
     }
       return null;
@@ -28,7 +33,7 @@ const PopularRestaurant: React.FC = () => {
     <>
       <div className='popular-title-container'>POPULAR RESTAURANT IN EPICURE:</div>
       <div className='popular-container'>
-        {items}
+        {restaurantPopular}
       </div>
       <ButtonG  anotherClass='all-restaurant-btn' src={require(`../../assets/AllRestaurant.svg`).default}/>
     </>

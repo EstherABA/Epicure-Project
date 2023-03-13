@@ -1,35 +1,48 @@
-import {createSlice} from "@reduxjs/toolkit"
+import {createSlice} from "@reduxjs/toolkit";
+import {IRestaurant} from "../../Interfaces"
 import data from '../../epicure.json';
 import HomeCard from '../../components/General/CardGeneral/CardGeneral'
 
+const presentRestaurants = async () => { 
+    try{
+        const response = await fetch('http://localhost:8000/api/restaurants',{
+            method: 'GET',
+    });
+        const data = await response.json();
+        return data ;  
+    } catch (error) {
+        console.log('There was an error', error);
+    }
+  }
+  
+  const restaurantsAllData:Array<IRestaurant> = await presentRestaurants();
+  
 export const RestaurantsSlice = createSlice({
     name: "Restaurants",
     initialState: {
-        value: data.restaurants
+        value: restaurantsAllData
     },
     reducers: {
         filterRestaurants: (state, action) => {
             const filterType = action.payload;
                 switch (filterType){
                 case "all":
-                    state.value = data.restaurants 
+                    state.value = restaurantsAllData 
                     break;
                 case "new":
-                    state.value = data.restaurants
-                    state.value = state.value.filter(
-                        (restaurant) => restaurant.isNew === true); 
+                    state.value = restaurantsAllData
+                    state.value = state.value.filter((restaurant:IRestaurant) => restaurant.isNew === true); 
                     break;
                 case "mostPopular":
-                    state.value = data.restaurants
-                    state.value = state.value.filter(
-                        (restaurant) => restaurant.mostPopular === true); 
+                    state.value = restaurantsAllData
+                    state.value = state.value.filter((restaurant:IRestaurant) => restaurant.mostPopular === true); 
                     break;
                 case "openNow":
-                    state.value = data.restaurants
+                    state.value = restaurantsAllData
                     const date = new Date();
                     const showTime = date.getHours()
                     state.value = state.value.filter(
-                        (restaurant) => {
+                        (restaurant:IRestaurant) => {
                             if(showTime >= restaurant.openHour!  && showTime <= restaurant.closeHour!){
                                 return restaurant
                             }
